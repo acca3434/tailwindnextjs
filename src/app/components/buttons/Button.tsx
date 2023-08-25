@@ -94,7 +94,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     return (
       <div className="relative overflow-auto rounded-xl p-8">
-        <div className="flex items-center justify-center">
+        <div className="flex">
           <span className="relative inline-flex">
             <button
               ref={ref}
