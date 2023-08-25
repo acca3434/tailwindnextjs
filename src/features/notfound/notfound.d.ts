@@ -1,0 +1,3 @@
+interface NotFoundProps {
+    errorMessage?: string
+}

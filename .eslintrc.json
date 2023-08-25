@@ -8,12 +8,7 @@
 	"plugin:tailwindcss/recommended",
     "prettier"
   ],
-  "overrides": [
-    {
-      "files" : ["*.ts", "*.tsx", "*.js"],
-      "parser": "@typescript-eslint/parser"
-    }
-  ],
+  "overrides": [],
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
