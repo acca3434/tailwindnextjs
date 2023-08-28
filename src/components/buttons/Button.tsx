@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { cn } from "@/app/lib/utils"
 
 const ButtonVariant = {
@@ -48,6 +48,7 @@ type ButtonProps = {
 } & React.ComponentPropsWithRef<'button'>;
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  
   (
     {
       variant = 'primary',
@@ -56,6 +57,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       title="거래하기"
     },
   ) => {
+
     return (
       <div className="relative overflow-auto rounded-xl p-8">
         <div className="flex">
