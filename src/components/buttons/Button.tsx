@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+'use client'
+import React from 'react';
 import { cn } from "@/app/lib/utils"
 
 const ButtonVariant = {

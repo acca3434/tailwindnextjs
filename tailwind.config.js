@@ -6,6 +6,7 @@ const pxr100 = getPxr(100)
 const pxr200 = getPxr(200)
 const pxr500 = getPxr(500)
 const config = {
+  darkMode: 'class',
   screens: {
       mobile: '360px', // @media (min-width: 360px)
       foldable: '523px', // @media (min-width: 523px)
@@ -38,11 +39,10 @@ const config = {
         lineHeight: pxr100,
         minWidth: pxr200,
         minHeight: pxr100,
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
+        backgroundImage: {
+            'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+            'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        },
     },
   },
   plugins: [],

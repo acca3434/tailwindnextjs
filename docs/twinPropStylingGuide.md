@@ -8,6 +8,7 @@
 
 그냥 문자열 템플릿을 사용하여 동적으로 값을 끼워맞추는것을 의미함
 파파고로 번역해서 보간이라는 단어가 많이 나올 것임.
+
 ## Basic styling
 
 Twin의 two prop을 사용하여 tailwind 클래스를 jsx 요소에 추가합니다:
@@ -16,16 +17,16 @@ Twin의 two prop을 사용하여 tailwind 클래스를 jsx 요소에 추가합�
 import 'twin.macro'
 
 const Component = () => (
-  <div tw="flex w-full">
-    <div tw="w-1/2"></div>
-    <div tw="w-1/2"></div>
-  </div>
+    <div tw="flex w-full">
+        <div tw="w-1/2"></div>
+        <div tw="w-1/2"></div>
+    </div>
 )
 ```
 
-- 조건부 스타일이 필요하지 않은 경우 "tw" 프로퍼티 사용
-- `twin.macro`에서 가져오면 "tw" 프로퍼티가 활성화됩니다.
-- Remove the need for an import with [babel-plugin-twin](https://github.com/ben-rogerson/babel-plugin-twin)
+-   조건부 스타일이 필요하지 않은 경우 "tw" 프로퍼티 사용
+-   `twin.macro`에서 가져오면 "tw" 프로퍼티가 활성화됩니다.
+-   Remove the need for an import with [babel-plugin-twin](https://github.com/ben-rogerson/babel-plugin-twin)
 
 ## Conditional styling
 
@@ -35,47 +36,47 @@ const Component = () => (
 import tw from 'twin.macro'
 
 const Component = ({ hasBg }) => (
-  <div
-    css={[
-      tw`flex w-full`, // 기본 스타일을 먼저 추가
-      hasBg && tw`bg-black`, // 그 다음 조건부 스타일 추가
-    ]}
-  >
-    <div tw="w-1/2" />
-    <div tw="w-1/2" />
-  </div>
+    <div
+        css={[
+            tw`flex w-full`, // 기본 스타일을 먼저 추가
+            hasBg && tw`bg-black`, // 그 다음 조건부 스타일 추가
+        ]}
+    >
+        <div tw="w-1/2" />
+        <div tw="w-1/2" />
+    </div>
 )
 ```
 
 <details>
 
-<summary>TypeScript example</summary>
+<summary>타입스크립트 예시</summary>
 
 ```tsx
 import tw from 'twin.macro'
 
 interface ComponentProps {
-  hasBg?: string
+    hasBg?: string
 }
 
 const Component = ({ hasBg }: ComponentProps) => (
-  <div
-    css={[
-      tw`flex w-full`, // 기본 스타일을 먼저 추가
-      hasBg && tw`bg-black`, // 그 다음 조건부 스타일 추가
-    ]}
-  >
-    <div tw="w-1/2" />
-    <div tw="w-1/2" />
-  </div>
+    <div
+        css={[
+            tw`flex w-full`, // 기본 스타일을 먼저 추가
+            hasBg && tw`bg-black`, // 그 다음 조건부 스타일 추가
+        ]}
+    >
+        <div tw="w-1/2" />
+        <div tw="w-1/2" />
+    </div>
 )
 ```
 
 </details>
 
-- 트윈은 'css prop'을 소유하고 있지 않으며, 'prop'은 당신의 css-in-js 라이브러리에서 가져온 것입니다
-- 배열에 값을 추가하면 기본 스타일, 조건 및 'vanilla css'를 쉽게 정의할 수 있습니다
-- 여러 줄을 사용하여 백틱 내에서 스타일을 구성할 수 있습니다 ([template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals))
+-   트윈은 'css prop'을 소유하고 있지 않으며, 'prop'은 당신의 css-in-js 라이브러리에서 가져온 것입니다
+-   배열에 값을 추가하면 기본 스타일, 조건 및 'vanilla css'를 쉽게 정의할 수 있습니다
+-   여러 줄을 사용하여 백틱 내에서 스타일을 구성할 수 있습니다 ([template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals))
 
 ## Overriding styles
 
@@ -85,60 +86,59 @@ css prop 뒤에 `tw` prop을 사용하여 우선 스타일을 추가합니다:
 import tw from 'twin.macro'
 
 const Component = () => (
-  <div css={tw`text-white`} tw="text-black">
-    Has black text
-  </div>
+    <div css={tw`text-white`} tw="text-black">
+        Has black text
+    </div>
 )
 ```
 
 ## Keeping jsx clean
 
-테일윈드 클래스 세트가 커지면 다른 jsx "프롭"의 가독성을 방해합니다.
-
+테일윈드 클래스 세트가 커지면 다른 jsx 프로퍼티의 가독성을 방해합니다.
 jsx를 정리하려면 스타일을 들어 올려 개체의 명명된 항목으로 그룹화합니다.
 
 ```js
 import tw from 'twin.macro'
 
 const styles = {
-  container: ({ hasBg }) => [
-    tw`flex w-full`, // 기본 스타일을 먼저 추가
-    hasBg && tw`bg-black`, // 그 다음 조건부 스타일 추가
-  ],
-  column: tw`w-1/2`,
+    container: ({ hasBg }) => [
+        tw`flex w-full`, // 기본 스타일을 먼저 추가
+        hasBg && tw`bg-black`, // 그 다음 조건부 스타일 추가
+    ],
+    column: tw`w-1/2`,
 }
 
 const Component = ({ hasBg }) => (
-  <section css={styles.container({ hasBg })}>
-    <div css={styles.column} />
-    <div css={styles.column} />
-  </section>
+    <section css={styles.container({ hasBg })}>
+        <div css={styles.column} />
+        <div css={styles.column} />
+    </section>
 )
 ```
 
 <details>
-  <summary>TypeScript example</summary>
+  <summary>타입스크립트 예시</summary>
 
 ```js
 import tw from 'twin.macro'
 
 interface ContainerProps {
-  hasBg?: boolean;
+    hasBg?: boolean;
 }
 
 const styles = {
-  container: ({ hasBg }: ContainerProps) => [
-    tw`flex w-full`, // Add base styles first
-    hasBg && tw`bg-black`, // Then add conditional styles
-  ],
-  column: tw`w-1/2`,
+    container: ({ hasBg }: ContainerProps) => [
+        tw`flex w-full`, // Add base styles first
+        hasBg && tw`bg-black`, // Then add conditional styles
+    ],
+    column: tw`w-1/2`,
 }
 
 const Component = ({ hasBg }: ContainerProps) => (
-  <section css={styles.container({ hasBg })}>
-    <div css={styles.column} />
-    <div css={styles.column} />
-  </section>
+    <section css={styles.container({ hasBg })}>
+        <div css={styles.column} />
+        <div css={styles.column} />
+    </section>
 )
 ```
 
@@ -152,30 +152,30 @@ const Component = ({ hasBg }: ContainerProps) => (
 import tw from 'twin.macro'
 
 const containerVariants = {
-  // Named class sets
-  light: tw`bg-white text-black`,
-  dark: tw`bg-black text-white`,
-  crazy: tw`bg-yellow-500 text-red-500`,
+    // Named class sets
+    light: tw`bg-white text-black`,
+    dark: tw`bg-black text-white`,
+    crazy: tw`bg-yellow-500 text-red-500`,
 }
 
 const styles = {
-  container: ({ variant = 'dark' }) => [
-    tw`flex w-full`,
-    containerVariants[variant], // Grab the variant style via a prop
-  ],
-  column: tw`w-1/2`,
+    container: ({ variant = 'dark' }) => [
+        tw`flex w-full`,
+        containerVariants[variant], // Grab the variant style via a prop
+    ],
+    column: tw`w-1/2`,
 }
 
 const Component = ({ variant }) => (
-  <section css={styles.container({ variant })}>
-    <div css={styles.column} />
-    <div css={styles.column} />
-  </section>
+    <section css={styles.container({ variant })}>
+        <div css={styles.column} />
+        <div css={styles.column} />
+    </section>
 )
 ```
 
 <details>
-  <summary>TypeScript example</summary>
+  <summary>타입스크립트 예시</summary>
 
 TwStyle 가져오기를 사용하여 "tw" 블록을 입력합니다
 
@@ -185,29 +185,29 @@ import tw, { TwStyle } from 'twin.macro'
 type WrapperVariant = 'light' | 'dark' | 'crazy'
 
 interface ContainerProps {
-  variant?: WrapperVariant
+    variant?: WrapperVariant
 }
 
 const containerVariants: Record<WrapperVariant, TwStyle> = {
-  // Named class sets
-  light: tw`bg-white text-black`,
-  dark: tw`bg-black text-white`,
-  crazy: tw`bg-yellow-500 text-red-500`,
+    // Named class sets
+    light: tw`bg-white text-black`,
+    dark: tw`bg-black text-white`,
+    crazy: tw`bg-yellow-500 text-red-500`,
 }
 
 const styles = {
-  container: ({ variant = 'dark' }: ContainerProps) => [
-    tw`flex w-full`,
-    containerVariants[variant], // 지지대를 통해 변형 스타일을 잡습니다
-  ],
-  column: tw`w-1/2`,
+    container: ({ variant = 'dark' }: ContainerProps) => [
+        tw`flex w-full`,
+        containerVariants[variant], // 지지대를 통해 변형 스타일을 잡습니다
+    ],
+    column: tw`w-1/2`,
 }
 
 const Component = ({ variant }: ContainerProps) => (
-  <section css={styles.container({ variant })}>
-    <div css={styles.column} />
-    <div css={styles.column} />
-  </section>
+    <section css={styles.container({ variant })}>
+        <div css={styles.column} />
+        <div css={styles.column} />
+    </section>
 )
 ```
 
@@ -244,9 +244,7 @@ import { theme } from 'twin.macro'
 // tailwind 구성의 테마 값 사용
 const styles = { sm: theme`spacing.2`, lg: theme`spacing.4` }
 
-const Component = ({ spacing = 'sm' }) => (
-  <div css={{ marginTop: styles[spacing] }} />
-)
+const Component = ({ spacing = 'sm' }) => <div css={{ marginTop: styles[spacing] }} />
 ```
 
 또는 우리는 항상 바닐라 css로 돌아갈 수 있습니다. 이것은 무엇이든 보간할 수 있습니다:
@@ -271,42 +269,40 @@ const buttonStyles = tw`
 `
 
 const Component = () => (
-  <button css={buttonStyles}>
-    <i>Icon</i>
-    <span>Label</span>
-  </button>
+    <button css={buttonStyles}>
+        <i>Icon</i>
+        <span>Label</span>
+    </button>
 )
 ```
 
 <details>
-  <summary>More examples</summary>
+  <summary>더 많은 예시</summary>
 
 <br/>
 
 ```js
 // theming/scoping "클래스 이름"을 기준으로 현재 요소 스타일 지정
 ;<body className="dark-theme">
-  <div tw="[.dark-theme &]:(bg-black text-white)">Dark theme</div>
+    <div tw="[.dark-theme &]:(bg-black text-white)">Dark theme</div>
 </body>
 
 // 사용자 지정 그룹 선택기 추가
 ;<button className="group" disabled>
-  <span tw="[.group:disabled &]:text-gray-500">Text gray</span>
+    <span tw="[.group:disabled &]:text-gray-500">Text gray</span>
 </button>
 
 // 사용자 지정 높이 쿼리 추가
-;<div tw="[@media (min-height: 800px)]:hidden">
-  This window is less than 800px height
-</div>
+;<div tw="[@media (min-height: 800px)]:hidden">This window is less than 800px height</div>
 
 // @supports와 같은 사용자 지정 "at-rules" 사용
 ;<div tw="[@supports (display: grid)]:grid">A grid</div>
 
 // Style the current element based on a dynamic className
 const Component = ({ isLarge }) => (
-  <div className={isLarge && 'is-large'} tw="text-base [&.is-large]:text-lg">
-    ...
-  </div>
+    <div className={isLarge && 'is-large'} tw="text-base [&.is-large]:text-lg">
+        ...
+    </div>
 )
 ```
 
@@ -344,6 +340,7 @@ To add simple custom styling, use [arbitrary properties](https://tailwindcss.com
 // Set grid areas
 <div tw="[grid-area:1 / 1 / 4 / 2]" />
 ```
+
 variants 또는 twins grouping features과 함께 임의의 속성을 사용합니다:
 Use arbitrary properties with variants or twins grouping features:
 
@@ -356,15 +353,15 @@ Use arbitrary properties with variants or twins grouping features:
 ```js
 import tw from 'twin.macro'
 ;<div
-  css={tw`
+    css={tw`
     block
     md:(relative [grid-area:1 / 1 / 4 / 2])
   `}
 />
 ```
 
-- Add a bang to make the custom css !important: `![grid-area:1 / 1 / 4 / 2]`
-- Arbitrary properties can have camelCase properties: `[gridArea:1 / 1 / 4 / 2]`
+-   Add a bang to make the custom css !important: `![grid-area:1 / 1 / 4 / 2]`
+-   Arbitrary properties can have camelCase properties: `[gridArea:1 / 1 / 4 / 2]`
 
 ### Advanced css styling
 
@@ -374,18 +371,18 @@ css prop은 sass와 같은 구문을 사용하여 사용자 지정 css와 테일
 import tw, { css, theme } from 'twin.macro'
 
 const Components = () => (
-  <input
-    css={[
-      tw`text-blue-500 border-2`,
-      css`
-        -webkit-tap-highlight-color: transparent; /* add css styles */
-        background-color: ${theme`colors.red.500`}; /* use the theme import to add config values */
-        &::selection {
-          ${tw`text-purple-500`}; /* style with tailwind classes */
-        }
-      `,
-    ]}
-  />
+    <input
+        css={[
+            tw`text-blue-500 border-2`,
+            css`
+                -webkit-tap-highlight-color: transparent; /* add css styles */
+                background-color: ${theme`colors.red.500`}; /* use the theme import to add config values */
+                &::selection {
+                    ${tw`text-purple-500`}; /* style with tailwind classes */
+                }
+            `,
+        ]}
+    />
 )
 ```
 
@@ -395,29 +392,29 @@ const Components = () => (
 import tw, { css, theme } from 'twin.macro'
 
 const Components = () => (
-  <input
-    css={[
-      tw`text-blue-500 border-2`,
-      css({
-        WebkitTapHighlightColor: 'transparent', // css 속성은 camelCase입니다
-        backgroundColor: theme`colors.red.500`, // 값은 보간이 필요하지 않습니다
-        '&::selection': tw`text-purple-500`, // single line tailwind selector styling
-      }),
-    ]}
-  />
+    <input
+        css={[
+            tw`text-blue-500 border-2`,
+            css({
+                WebkitTapHighlightColor: 'transparent', // css 속성은 camelCase입니다
+                backgroundColor: theme`colors.red.500`, // 값은 보간이 필요하지 않습니다
+                '&::selection': tw`text-purple-500`, // single line tailwind selector styling
+            }),
+        ]}
+    />
 )
 ```
 
 ## Learn more
 
-- [Styled component guide](https://github.com/ben-rogerson/twin.macro/blob/master/docs/styled-component-guide.md) - A must-read guide on getting productive with styled-components
+-   [Styled component guide](https://github.com/ben-rogerson/twin.macro/blob/master/docs/styled-component-guide.md) - A must-read guide on getting productive with styled-components
 
 ## Resources
 
-- [babel-plugin-twin](https://github.com/ben-rogerson/babel-plugin-twin) - Use the tw and css props without adding an import
-- [React + Tailwind breakpoint syncing](https://gist.github.com/ben-rogerson/b4b406dffcc18ae02f8a6c8c97bb58a8) - Sync your tailwind.config.js breakpoints with react
-- [Twin VSCode snippits](https://gist.github.com/ben-rogerson/c6b62508e63b3e3146350f685df2ddc9) - For devs who want to type less
-- [Twin VSCode extensions](https://github.com/ben-rogerson/twin.macro/discussions/227) - For faster class suggestions and feedback
+-   [babel-plugin-twin](https://github.com/ben-rogerson/babel-plugin-twin) - Use the tw and css props without adding an import
+-   [React + Tailwind breakpoint syncing](https://gist.github.com/ben-rogerson/b4b406dffcc18ae02f8a6c8c97bb58a8) - Sync your tailwind.config.js breakpoints with react
+-   [Twin VSCode snippits](https://gist.github.com/ben-rogerson/c6b62508e63b3e3146350f685df2ddc9) - For devs who want to type less
+-   [Twin VSCode extensions](https://github.com/ben-rogerson/twin.macro/discussions/227) - For faster class suggestions and feedback
 
 ---
 

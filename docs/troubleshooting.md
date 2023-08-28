@@ -24,16 +24,17 @@ prettier 의존성을 벗어남은 물론 몇몇 추가 기능을 제공하는 �
 
 ```javascript
 module.exports = {
-  plugins: ['prettier-plugin-tailwindcss'],
+    plugins: ['prettier-plugin-tailwindcss'],
 }
 ```
+
 그 이후 설정은 아래 참고사이트에서 참고
 
 [prettier](https://github.com/tailwindlabs/prettier-plugin-tailwindcss)
 
 다음은 eslint를 설정합니다.
 
-## .eslintrc.json 
+## .eslintrc.json
 
 ## ESLint 파서 구성
 
@@ -41,9 +42,9 @@ module.exports = {
   "overrides": [
 	{
 		"files" : ["*.ts", "*.tsx", "*.js"],
-		"parser": "@typescript-eslint/parser"
-	}
-  ],
+      "parser": "@typescript-eslint/parser"
+    }
+    ],
 ```
 
 ## Npm 스크립트 추가
@@ -57,6 +58,21 @@ package.json소스 파일을 대상으로 eslint를 실행하려면 하나 이�
   "lint:fix": "eslint ./src --fix"
 },
 ```
+
+## 해결 방법
+
+이 아이 때문에 2시간 날려먹음^^
+어차피 안돼는데 또 하나의 이슈가 또 발생함
+prettier가 안먹히는 주요 원인이 되었음
+
+`npm uninstall eslint-plugin-tailwindcss`
+`npm uninstall prettier-plugin-tailwindcss`
+
+시원하게 때리자.
+
+## 결과
+
+너무 잘됌
 
 # use-client 에러 발생
 
@@ -106,3 +122,105 @@ layout같은 경우는 너무 설명이 길어지니, 일단 해결방법은?
 ## 참고 사이트
 
 [Next.js 13의 Client Component 살펴보기](https://mycodings.fly.dev/blog/2022-11-17-nextjs-13-client-component)
+
+# twin.macro에서 tw를 이용한 font가 적용 안됌
+
+```tsx
+'use client'
+
+import tw, { css } from 'twin.macro'
+import React from 'react'
+interface TestProps {
+    width?: number
+    height?: number
+}
+const Test: React.FC<TestProps> = ({ width, height }) => {
+    return (
+        <>
+            <div
+                className="font-NanumSquare"
+                css={[
+                    tw`w-full h-full`,
+                    {
+                        width: width,
+                        height: height,
+                    },
+                ]}
+            >
+                안녕하세요
+            </div>
+            <div className="p-4 md:p-0">
+                <p className="md:text-[34px] md:text-left text-xl text-center font-NanumGothic font-tiny">
+                    이륙할 준비가 되셨나요?
+                </p>
+                <p className="md:text-52 md:p-0 mt-4 pl-7 pr-7 font-NanumSquare text-center md:text-left md:leading-[3rem]">
+                    <span className="font-bold">새로운 세상</span>
+                    <span className="opacity-80">을 위한</span>
+                    <br />
+                    <span className="font-bold">앞서가는 개발자</span>
+                    <span className="opacity-80">취업 프로젝트</span>
+                </p>
+            </div>
+        </>
+    )
+}
+
+export default Test
+```
+
+폰트 적용이 너무 안돼길래
+혹시나 싶어서 곽교수님 코드를 긁어왔다
+
+```tsx
+'use client'
+
+import tw, { css } from 'twin.macro'
+import React from 'react'
+interface TestProps {
+    width?: number
+    height?: number
+}
+const Test: React.FC<TestProps> = ({ width, height }) => {
+    return (
+        <>
+            <div
+                className="font-NanumSquare"
+                css={[
+                    tw`w-full h-full`,
+                    {
+                        width: width,
+                        height: height,
+                    },
+                ]}
+            >
+                안녕하세요
+            </div>
+            <div className="p-4 md:p-0">
+                <p className="md:text-[34px] md:text-left text-xl text-center font-NanumGothic font-tiny">
+                    이륙할 준비가 되셨나요?
+                </p>
+                <p className="md:text-52 md:p-0 mt-4 pl-7 pr-7 font-NanumSquare text-center md:text-left md:leading-[3rem]">
+                    <span className="font-bold">새로운 세상</span>
+                    <span className="opacity-80">을 위한</span>
+                    <br />
+                    <span className="font-bold">앞서가는 개발자</span>
+                    <span className="opacity-80">취업 프로젝트</span>
+                </p>
+            </div>
+        </>
+    )
+}
+
+export default Test
+```
+
+당황스러울 정도로 너무 잘됌
+차이점은 tw를 이용한 속성 정의에서 font는 적용되지 않는 것 같다.
+
+## 해결 방안
+
+원래 문자열 템플릿 동적 할당은 되지 않도록 설계함.
+따라서 여러 가지 방법을 적용한 설명문을 가져옴.
+발번역이라 직접 가서 보시는걸 추천합니다.
+
+[참고 md파일](twinPropStylingGuide.md)
