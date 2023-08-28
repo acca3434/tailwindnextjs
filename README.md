@@ -1,5 +1,3 @@
-# tailwindnextjs
-
 ## 사용한 라이브러리(굵직한)
 
 1.  Next.js 13
@@ -46,6 +44,8 @@ globals.css
         },
 ```
 
+## docs파일에 정리
+
 ### pxr이란?
 
 [pxr](docs/pxr.md)
@@ -56,7 +56,7 @@ globals.css
 
 ### clsx & tailwind-merge
 
-[clsx & tailwind-merge](src/app/lib/utils.ts)
+[clsx & tailwind-merge](src/app/lib/README.md)
 
 ### clsx & tailwind-merge을 활용한 버튼 예제
 
