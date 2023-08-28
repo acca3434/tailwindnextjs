@@ -12,7 +12,8 @@
 ### 글씨체
 
 `나눔스퀘어`와 `나눔고딕`사용
-globals.css
+
+##### globals.css
 
 ```css
 @font-face {
@@ -31,6 +32,8 @@ globals.css
 ```
 
 ### fontWeight 및 pxr 설정
+
+##### next.config.js
 
 ```javascript
         fontFamily: {
