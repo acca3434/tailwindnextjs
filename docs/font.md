@@ -1,5 +1,3 @@
-# 개요
-
 참고사이트를 따라서 번역한 글 입니다. [참고사이트](https://github.com/ben-rogerson/twin.macro/blob/master/docs/fonts.md)
 
 # Fonts
