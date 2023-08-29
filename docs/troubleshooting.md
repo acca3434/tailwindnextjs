@@ -9,7 +9,7 @@ tailwindlabs에서 공식으로 지원하는 플러그인
 prettier 의존성을 벗어남은 물론 몇몇 추가 기능을 제공하는 플러그인.
 아쉽게도 svelte에서는 완벽히 호환이 되진 않는다.
 
-# Installation
+### Installation
 
 시작하려면 `prettier,eslint-plugin-tailwindcss`를 개발자 종속 요소로 설치하세요
 
@@ -20,7 +20,7 @@ prettier 의존성을 벗어남은 물론 몇몇 추가 기능을 제공하는 �
 
 그런 다음 플러그인을 Prettier 구성에 추가합니다:
 
-## prettier.config.js
+### prettier.config.js
 
 ```javascript
 module.exports = {
@@ -34,9 +34,9 @@ module.exports = {
 
 다음은 eslint를 설정합니다.
 
-## .eslintrc.json
+### .eslintrc.json
 
-## ESLint 파서 구성
+### ESLint 파서 구성
 
 ```json
   "overrides": [
@@ -47,7 +47,7 @@ module.exports = {
     ],
 ```
 
-## Npm 스크립트 추가
+### Npm 스크립트 추가
 
 package.json소스 파일을 대상으로 eslint를 실행하려면 하나 이상의 스크립트를 추가하세요 .
 
@@ -59,7 +59,7 @@ package.json소스 파일을 대상으로 eslint를 실행하려면 하나 이�
 },
 ```
 
-## 해결 방법
+### 해결 방법
 
 이 아이 때문에 2시간 날려먹음^^
 어차피 안돼는데 또 하나의 이슈가 또 발생함
@@ -70,7 +70,7 @@ prettier가 안먹히는 주요 원인이 되었음
 
 시원하게 때리자.
 
-## 결과
+### 결과
 
 너무 잘됌
 
@@ -103,7 +103,7 @@ Learn more: https://nextjs.org/docs/getting-started/react-essentials
    `----
 ```
 
-## 원인
+### 원인
 
 위 코드처럼 Next.js 13 버전이 친절하게 클라이언트 컴포넌트를 쓰려면 'use client' 디렉티브를 지정하라고 나옵니다.
 그럼 다시 useState 부분은 삭제하고 다시 진행하겠습니다.
@@ -115,11 +115,11 @@ Search 결과가 나타나는 곳은 Nested 형태로 Layout을 가져가서 데
 search 폴더 밑에 layout.tsx 파일을 만들겠다는 거는 search 폴더 밑으로 같은 layout을 적용하겠다는 얘기입니다.
 layout같은 경우는 너무 설명이 길어지니, 일단 해결방법은?
 
-## 해결 방법
+### 해결 방법
 
 최상단에 `use-client`를 붙혀주세요
 
-## 참고 사이트
+### 참고 사이트
 
 [Next.js 13의 Client Component 살펴보기](https://mycodings.fly.dev/blog/2022-11-17-nextjs-13-client-component)
 
@@ -217,8 +217,88 @@ export default Test
 당황스러울 정도로 너무 잘됌
 차이점은 tw를 이용한 속성 정의에서 font는 적용되지 않는 것 같다.
 
-## 해결 방안
+### 이슈 해결 시도
 
+styles/GlobalStyles.tsx파일을 생성(폴더도 없으면 같이 생성해주세요)
+
+[Fonft관련 글](font.md)
+
+```tsx
+'use client'
+import React from 'react'
+import { createGlobalStyle } from 'styled-components'
+import tw, { GlobalStyles as BaseStyles } from 'twin.macro'
+
+const CustomStyles = createGlobalStyle`
+@font-face {
+    font-family: 'NanumGothic';
+    src: url('http://fonts.googleapis.com/earlyaccess/nanumgothic.css') format('css');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'NanumSquare';
+    src: url('https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css') format('css');
+    font-weight: normal;
+    font-style: normal;
+}
+`
+
+const GlobalStyles = () => (
+    <>
+        <BaseStyles />
+        <CustomStyles />
+    </>
+)
+
+export default GlobalStyles
+```
+
+한 번 실행해 보자
+
+### 해결 방안
+
+그냥 내가 착각했음.
+styles/GlobalStyles.tsx파일을 생성해서 처리해도 되지만
+그 전에 tailwind.config.js와 globals.css에서 처리를 끝내놔서
+그냥 내가 착각한 거였음.
+
+#### tw font 적용 전
+
+```html
+<p className="md:text-52 md:p-0 mt-4 pl-7 pr-7 font-NanumSquare text-center md:text-left md:leading-[3rem]">
+    <span className="font-bold">새로운 세상</span>
+    <span className="opacity-80">을 위한</span>
+    <br />
+    <span className="font-bold">앞서가는 개발자</span>
+    <span className="opacity-80">취업 프로젝트</span>
+</p>
+```
+
+#### tw font 적용 후
+
+```jsx
+<p css={[tw`md:text-52 md:p-0 mt-4 pl-7 pr-7 font-NanumSquare text-center md:text-left md:leading-[3rem]`]}>
+    <span
+        css={[
+            tw`font-bold`,
+            {
+                fontSize: width,
+            },
+        ]}
+    >
+        새로운 세상
+    </span>
+    <span css={[tw`opacity-80`]}>을 위한</span>
+    <br />
+    <span css={[tw`font-bold`]}>앞서가는 개발자</span>
+    <span css={[tw`opacity-80`]}>취업 프로젝트</span>
+</p>
+```
+
+# 동적 할당은 그래서 안됌??
+
+ㅇㅇ 되도록 사용하는걸 지양합니다.
 원래 문자열 템플릿 동적 할당은 되지 않도록 설계함.
 따라서 여러 가지 방법을 적용한 설명문을 가져옴.
 발번역이라 직접 가서 보시는걸 추천합니다.

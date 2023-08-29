@@ -9,10 +9,9 @@ interface TestProps {
 const Test: React.FC<TestProps> = ({ width, height }) => {
     return (
         <>
-            <div
-                className="font-NanumSquare"
+            <p
                 css={[
-                    tw`w-full h-full`,
+                    tw`w-full h-full `,
                     {
                         width: width,
                         height: height,
@@ -20,9 +19,31 @@ const Test: React.FC<TestProps> = ({ width, height }) => {
                 ]}
             >
                 안녕하세요
-            </div>
+            </p>
+            <p css={[tw`md:text-52 md:p-0 mt-4 pl-7 pr-7 font-NanumSquare text-center md:text-left md:leading-[3rem]`]}>
+                <span
+                    css={[
+                        tw`font-bold`,
+                        {
+                            fontSize: width,
+                        },
+                    ]}
+                >
+                    새로운 세상
+                </span>
+                <span css={[tw`opacity-80`]}>을 위한</span>
+                <br />
+                <span css={[tw`font-bold`]}>앞서가는 개발자</span>
+                <span css={[tw`opacity-80`]}>취업 프로젝트</span>
+            </p>
+            <p css={[tw`md:text-[20px] md:text-left text-xl text-center font-NanumGothic font-tiny`]}>
+                이륙할 준비가 되셨나요?
+            </p>
             <div className="p-4 md:p-0">
-                <p className="md:text-[34px] md:text-left text-xl text-center font-NanumGothic font-tiny">
+                <p className="md:text-[20px] md:text-left text-xl text-center font-NanumGothic font-tiny">
+                    이륙할 준비가 되셨나요?
+                </p>
+                <p className="md:text-[20px] md:text-left text-xl text-center font-NanumGothic font-tiny">
                     이륙할 준비가 되셨나요?
                 </p>
                 <p className="md:text-52 md:p-0 mt-4 pl-7 pr-7 font-NanumSquare text-center md:text-left md:leading-[3rem]">
