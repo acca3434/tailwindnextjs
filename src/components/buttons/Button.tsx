@@ -45,35 +45,38 @@ type ButtonProps = {
     variant?: keyof typeof ButtonVariant
     size?: keyof typeof ButtonSize
     title?: string
-} & React.ComponentPropsWithRef<'button'>
+}
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ variant = 'primary', size = 'base', isDarkBg = false, title = '거래하기' }) => {
-        return (
-            <div className="relative overflow-auto rounded-xl p-8">
-                <div className="flex">
-                    <span className="relative inline-flex">
-                        <button
-                            type="button"
-                            className={cn(
-                                'inline-flex items-center rounded-md text-sm font-semibold leading-6 text-sky-500 shadow ring-1 ring-slate-900/10 transition duration-150 ease-in-out',
-                                ButtonSize[size],
-                                ...ButtonVariant[variant], // Use spread operator to include the classes
-                                isDarkBg && ['hover:bg-gray-900', 'active:bg-gray-800', 'disabled:bg-gray-800'], // Add isDarkBg classes here
-                            )}
-                            // disabled={disabled}
-                        >
-                            {title}
-                        </button>
-                        <span className="absolute right-[-5%] top-[-10%] -mr-1 -mt-1 flex h-5 w-5">
-                            <span className="absolute inline-flex h-full w-full animate-bounce rounded-full bg-sky-400"></span>
-                        </span>
+const Button: React.FC<ButtonProps> = ({
+    variant = 'primary',
+    size = 'base',
+    isDarkBg = false,
+    title = '거래하기',
+}) => {
+    return (
+        <div className="relative overflow-auto rounded-xl p-8">
+            <div className="flex">
+                <span className="relative inline-flex">
+                    <button
+                        type="button"
+                        className={cn(
+                            'inline-flex items-center rounded-md text-sm font-semibold leading-6 text-sky-500 shadow ring-1 ring-slate-900/10 transition duration-150 ease-in-out',
+                            ButtonSize[size],
+                            ...ButtonVariant[variant], // Use spread operator to include the classes
+                            isDarkBg && ['hover:bg-gray-900', 'active:bg-gray-800', 'disabled:bg-gray-800'], // Add isDarkBg classes here
+                        )}
+                        // disabled={disabled}
+                    >
+                        {title}
+                    </button>
+                    <span className="absolute right-[-5%] top-[-10%] -mr-1 -mt-1 flex h-5 w-5">
+                        <span className="absolute inline-flex h-full w-full animate-bounce rounded-full bg-sky-400"></span>
                     </span>
-                </div>
+                </span>
             </div>
-        )
-    },
-)
+        </div>
+    )
+}
 
 export default Button
 

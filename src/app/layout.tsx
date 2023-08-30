@@ -1,18 +1,28 @@
-import './globals.css';
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-
-const inter = Inter({ subsets: ['latin'] });
+'use Client'
+import './globals.css'
+import { ReactNode } from 'react'
+import type { Metadata } from 'next'
+import Layout from '@/layouts/context/card'
+import StyledComponentsRegistry from '@/app/lib/registry'
+interface RootLayOutProps {
+    children: ReactNode
+}
 
 export const metadata: Metadata = {
-  title: 'TailWind 설정',
-  description: 'Tailwind 설정하자',
-};
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
-  );
+    title: 'TailWind 설정',
+    description: 'Tailwind 설정하자',
 }
+
+const RootLayout: React.FC<RootLayOutProps> = ({ children }) => {
+    return (
+        <html>
+            <body>
+                <StyledComponentsRegistry>
+                    <Layout>{children}</Layout>
+                </StyledComponentsRegistry>
+            </body>
+        </html>
+    )
+}
+
+export default RootLayout

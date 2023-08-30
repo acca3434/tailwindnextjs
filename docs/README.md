@@ -1553,18 +1553,6 @@ const Test: React.FC<TestProps> = ({ width, height }) => {
             >
                 안녕하세요
             </div>
-            <div className="p-4 md:p-0">
-                <p className="md:text-[34px] md:text-left text-xl text-center font-NanumGothic font-tiny">
-                    이륙할 준비가 되셨나요?
-                </p>
-                <p className="md:text-52 md:p-0 mt-4 pl-7 pr-7 font-NanumSquare text-center md:text-left md:leading-[3rem]">
-                    <span className="font-bold">새로운 세상</span>
-                    <span className="opacity-80">을 위한</span>
-                    <br />
-                    <span className="font-bold">앞서가는 개발자</span>
-                    <span className="opacity-80">취업 프로젝트</span>
-                </p>
-            </div>
         </>
     )
 }
@@ -1708,5 +1696,131 @@ styles/GlobalStyles.tsx파일을 생성해서 처리해도 되지만
 발번역이라 직접 가서 보시는걸 추천합니다.
 
 [참고 md파일](twinPropStylingGuide.md)
+
+# Layout이 적용이 안됌
+
+Next.js 12버전에서는 getLayout이라는 방법을 통해, 기본적인 레이아웃을 설정할 수 있음
+13버전은 처음이니, 설정 방식을 몰라서 직접적인 컴포넌트 상위에 감싸주었음
+
+#### src/app/page.tsx
+
+```tsx
+import Test from '@/components/Test/Test'
+import Button from '@/components/buttons/Button'
+import Layout from '@/layouts/card/'
+export default function Home() {
+    return (
+        <Layout>
+            <h1 className="text-3xl font-bold underline">Hello, Next.js!</h1>
+            <Button disabled={true} title={'거래하기'} variant="primary" />
+            <Button disabled={true} title={'과정목록'} variant="ghost" />
+            <Button disabled={true} title={'학생목록'} variant="dark" />
+            <Test width={100} height={100}></Test>
+        </Layout>
+    )
+}
+```
+
+시원하게 적용이 안됌
+
+## Nesting Layouts
+
+폴더(예: 앱/대시보드/layout.js) 내에 정의된 레이아웃은 특정 경로 세그먼트(예: acme.com/dashboard)에 적용되며 해당 세그먼트가 활성화될 때 렌더링됩니다. 기본적으로 파일 계층 구조의 레이아웃은 중첩되어 있으므로 하위 레이아웃이 하위 프로퍼티를 통해 하위 레이아웃을 감싸게 됩니다.
+
+다음은 예시입니다.
+
+#### app/dashboard/layout.tsx
+
+```tsx
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+    return <section>{children}</section>
+}
+```
+
+위의 두 레이아웃을 결합하면 루트 레이아웃(app/layout.js)이 대시보드 레이아웃(app/dashboard/layout.js)을 감싸고, 대시보드 레이아웃은 app/dashboard/\*(역주: 경로 세그먼트를 감싸는 레이아웃)을 감싸게 됩니다.
+
+## Modifying `<head>`
+
+앱 디렉토리에서 기본 제공 SEO 지원을 사용하여 제목 및 메타 등의 `<head>` HTML 요소를 수정할 수 있습니다.
+
+메타데이터는 메타데이터 객체를 내보내거나 layout.js 또는 page.js 파일에서 generateMetadata 함수를 사용하여 정의할 수 있습니다.
+
+#### app/page.tsx
+
+```tsx
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: 'Next.js',
+}
+
+export default function Page() {
+    return '...'
+}
+```
+
+더 자세한 내용은 다음에서 확인하세요.
+
+[Next.js 13버전 pages-and-layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#nesting-layouts)
+
+## 해결 방안
+
+#### src/layouts/card/index.tsx
+
+```tsx
+const Wrapper: React.FC<BasicLayoutProps> = ({ children }) => {
+    return (
+        <>
+            <div className="bg-white rounded-lg shadow-lg p-6">
+                <h2 className="text-xl font-bold mb-4">
+                    <div className="m-20 h-full w-full border-black bg-sky-100 p-20">
+                        <div className="flex items-between justify-between">
+                            <p className="font-NanumGothic font-bold">과정 목록</p>
+                            <div className="">X</div>
+                        </div>
+                    </div>
+                </h2>
+                <div>{children}</div>
+            </div>
+        </>
+    )
+}
+
+export default Wrapper
+```
+
+그 후 layout.tsx에 import하여 해당 컴포넌트를 상위에 감싸준다.
+
+#### /src/app/layout.tsx
+
+```tsx
+'use Client'
+import './globals.css'
+import { ReactNode } from 'react'
+import type { Metadata } from 'next'
+import Layout from '@/layouts/card/'
+interface RootLayOutProps {
+    children: ReactNode
+}
+
+export const metadata: Metadata = {
+    title: 'TailWind 설정',
+    description: 'Tailwind 설정하자',
+}
+
+const RootLayout: React.FC<RootLayOutProps> = ({ children }) => {
+    return (
+        <html>
+            <body className="bg-gray-100 dark">
+                <Layout>{children}</Layout>
+            </body>
+        </html>
+    )
+}
+
+export default RootLayout
+```
+
+그리고 실행해보면 놀랍게도 잘됀다.
 
 </details>
