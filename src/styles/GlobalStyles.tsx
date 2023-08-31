@@ -1,28 +1,20 @@
-// 'use client'
-// import React from 'react'
-// import { createGlobalStyle } from 'styled-components'
-// import tw, { GlobalStyles as BaseStyles } from 'twin.macro'
+'use client'
+import React from 'react'
+import { createGlobalStyle } from 'styled-components'
+import tw, { GlobalStyles as BaseStyles } from 'twin.macro'
 
-// const CustomStyles = createGlobalStyle`
-// @font-face {
-//     font-family: 'NanumGothic';
-//     src: url('http://fonts.googleapis.com/earlyaccess/nanumgothic.css') format('css');
-//     font-weight: normal;
-//     font-style: normal;
-// }
-// @font-face {
-//     font-family: 'NanumSquare';
-//     src: url('https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css') format('css');
-//     font-weight: normal;
-//     font-style: normal;
-// }
-// `
+const CustomStyles = createGlobalStyle({
+    body: {
+        WebkitTapHighlightColor: `colors.purple.500`,
+        ...tw`antialiased`,
+    },
+})
 
-// const GlobalStyles = () => (
-//     <>
-//         <BaseStyles />
-//         <CustomStyles />
-//     </>
-// )
+const GlobalStyles = () => (
+    <>
+        <BaseStyles />
+        <CustomStyles />
+    </>
+)
 
-// export default GlobalStyles
+export default GlobalStyles

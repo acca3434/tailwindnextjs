@@ -1,6 +1,7 @@
 'use client'
 import React from 'react'
 import { cn } from '@/app/lib/utils'
+import tw from 'twin.macro'
 
 const ButtonVariant = {
     primary: [
@@ -34,8 +35,8 @@ const ButtonVariant = {
 }
 
 const ButtonSize = {
-    base: ['px-4 py-2', 'text-sm md:text-base'],
-    sm: ['px-2 py-1', 'text-xs md:text-sm'],
+    base: ['px-10 py-8', 'text-sm md:text-base', 'w-100 h-50'],
+    sm: ['px-5 py-2.5', 'text-xs md:text-sm', 'w-80 h-35'],
 }
 
 type ButtonProps = {
@@ -54,22 +55,22 @@ const Button: React.FC<ButtonProps> = ({
     title = '거래하기',
 }) => {
     return (
-        <div className="relative overflow-auto rounded-xl p-8">
+        <div className="rounded-xl p-8">
             <div className="flex">
                 <span className="relative inline-flex">
                     <button
                         type="button"
                         className={cn(
-                            'inline-flex items-center rounded-md text-sm font-semibold leading-6 text-sky-500 shadow ring-1 ring-slate-900/10 transition duration-150 ease-in-out',
+                            'flex items-center justify-center rounded-md text-sm font-semibold leading-6 text-sky-500 shadow ring-1 ring-slate-900/10 transition duration-150 ease-in-out',
                             ButtonSize[size],
                             ...ButtonVariant[variant], // Use spread operator to include the classes
                             isDarkBg && ['hover:bg-gray-900', 'active:bg-gray-800', 'disabled:bg-gray-800'], // Add isDarkBg classes here
                         )}
                         // disabled={disabled}
                     >
-                        {title}
+                        <h2 css={tw`[font-size: medium] text-center font-NanumGothic font-bold`}>{title}</h2>
                     </button>
-                    <span className="absolute right-[-5%] top-[-10%] -mr-1 -mt-1 flex h-5 w-5">
+                    <span className="absolute right-[-5%] top-[-10%] -mr-1 -mt-1 flex h-15 w-15">
                         <span className="absolute inline-flex h-full w-full animate-bounce rounded-full bg-sky-400"></span>
                     </span>
                 </span>
@@ -79,34 +80,3 @@ const Button: React.FC<ButtonProps> = ({
 }
 
 export default Button
-
-// const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-//   (
-//     {
-//       children,
-//       className,
-//       disabled: buttonDisabled,
-//       isLoading,
-//       variant = 'primary',
-//       size = 'base',
-//       isDarkBg = false,
-//       leftIcon: LeftIcon,
-//       rightIcon: RightIcon,
-//       classNames,
-//       ...rest
-//     },
-//     ref
-//   ) => {
-
-// type ButtonProps = {
-//   isLoading?: boolean;
-//   isDarkBg?: boolean;
-//   variant?: (typeof ButtonVariant)[number];
-//   size?: (typeof ButtonSize)[number];
-//   leftIcon?: IconType | LucideIcon;
-//   rightIcon?: IconType | LucideIcon;
-//   classNames?: {
-//     leftIcon?: string;
-//     rightIcon?: string;
-//   };
-// } & React.ComponentPropsWithRef<'button'>;

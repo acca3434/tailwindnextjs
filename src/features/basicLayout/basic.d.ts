@@ -1,3 +1,6 @@
 interface BasicLayoutProps {
-    children: React.ReactNode
+    title?: string
+    children?: React.ReactNode
+    close?: () => void
 }
+interface LoginLayoutProps extends BasicLayoutProps {}

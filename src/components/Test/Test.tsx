@@ -20,7 +20,11 @@ const Test: React.FC<TestProps> = ({ width, height }) => {
             >
                 안녕하세요
             </p>
-            <p css={[tw`md:text-52 md:p-0 mt-4 pl-7 pr-7 font-NanumSquare text-center md:text-left md:leading-[3rem]`]}>
+            <p
+                css={[
+                    tw`mobile:text-52 mobile:p-0 mt-4 pl-7 pr-7 font-NanumSquare text-center mobile:text-left mobile:leading-[3rem]`,
+                ]}
+            >
                 <span
                     css={[
                         tw`font-bold`,
@@ -36,7 +40,7 @@ const Test: React.FC<TestProps> = ({ width, height }) => {
                 <span css={[tw`font-bold`]}>앞서가는 개발자</span>
                 <span css={[tw`opacity-80`]}>취업 프로젝트</span>
             </p>
-            <p css={[tw`md:text-[20px] md:text-left text-xl text-center font-NanumGothic font-tiny`]}>
+            <p css={[tw`mobile:text-[20px] mobile:text-left text-xl text-center font-NanumGothic font-tiny`]}>
                 이륙할 준비가 되셨나요?
             </p>
             <div className="p-4 md:p-0">
