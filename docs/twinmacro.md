@@ -34,83 +34,78 @@ npm i -D twin.macro @emotion/babel-plugin babel-plugin-macros @babel/plugin-synt
 이 때, 후에 한 번 더 설명하겠지만, `npm i @emotion/react @emotion/styled` 및 `npm i -S @emotion/serialize`는 포함하지 않아도 됀다
 자세한 얘기는 후에 다루겠다.
 
-
 최상위 루트에 withTwin.js 파일을 생성한다.
 
 ### withTwin.js
 
 ```javascript
 /* eslint-disable no-param-reassign */
-const path = require('path');
+const path = require('path')
 
-const includedDirs = [path.resolve(__dirname, 'src')];
+const includedDirs = [path.resolve(__dirname, 'src')]
 
 module.exports = function withTwin(nextConfig) {
-  return {
-    ...nextConfig,
-    webpack(config, options) {
-      const { dev, isServer } = options;
-      config.module = config.module || {};
-      config.module.rules = config.module.rules || [];
-      config.module.rules.push({
-        test: /\.(tsx|ts)$/,
-        include: includedDirs,
-        use: [
-          options.defaultLoaders.babel,
-          {
-            loader: 'babel-loader',
-            options: {
-              sourceMaps: dev,
-              presets: [
-                [
-                  '@babel/preset-react',
-                  { runtime: 'automatic', importSource: '@emotion/react' },
+    return {
+        ...nextConfig,
+        webpack(config, options) {
+            const { dev, isServer } = options
+            config.module = config.module || {}
+            config.module.rules = config.module.rules || []
+            config.module.rules.push({
+                test: /\.(tsx|ts)$/,
+                include: includedDirs,
+                use: [
+                    options.defaultLoaders.babel,
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            sourceMaps: dev,
+                            presets: [
+                                ['@babel/preset-react', { runtime: 'automatic', importSource: '@emotion/react' }],
+                            ],
+                            plugins: [
+                                require.resolve('babel-plugin-macros'),
+                                require.resolve('@emotion/babel-plugin'),
+                                [require.resolve('@babel/plugin-syntax-typescript'), { isTSX: true }],
+                            ],
+                        },
+                    },
                 ],
-              ],
-              plugins: [
-                require.resolve('babel-plugin-macros'),
-                require.resolve('@emotion/babel-plugin'),
-                [
-                  require.resolve('@babel/plugin-syntax-typescript'),
-                  { isTSX: true },
-                ],
-              ],
-            },
-          },
-        ],
-      });
+            })
 
-      if (!isServer) {
-        config.resolve.fallback = {
-          ...(config.resolve.fallback || {}),
-          fs: false,
-          module: false,
-          path: false,
-          os: false,
-          crypto: false,
-        };
-      }
+            if (!isServer) {
+                config.resolve.fallback = {
+                    ...(config.resolve.fallback || {}),
+                    fs: false,
+                    module: false,
+                    path: false,
+                    os: false,
+                    crypto: false,
+                }
+            }
 
-      if (typeof nextConfig.webpack === 'function') {
-        return nextConfig.webpack(config, options);
-      }
-      return config;
-    },
-  };
-};
+            if (typeof nextConfig.webpack === 'function') {
+                return nextConfig.webpack(config, options)
+            }
+            return config
+        },
+    }
+}
 ```
+
 그 후에 최상위 루트의 `next.config.js`설정 파일에 다음과 같이 webpack 설정을 적용해준다.
 
 ```typescript
-const withTwin = require('./withTwin');
+const withTwin = require('./withTwin')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = withTwin({
-  reactStrictMode: true,
-});
+    reactStrictMode: true,
+})
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
+
 이 때, [twin.d.ts](../src/types/twin.d.ts)를 보자면
 
 ```typescript
@@ -143,104 +138,98 @@ declare global {
         }
     }
 }
-
 ```
+
 자세한건 모르지만, styled-components 내장 객체에서 해당 속성 객체를 가져와도 무방함.
 
 이러한 type 선언에 대해 살펴보도록 `tsconfig.json`파일에 `types`속성을 추가한다.
 
 ```json
 {
-  "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"],
-  "types": ["types"] // type 선언 추가
+    "compilerOptions": {
+        "target": "es5",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noEmit": true,
+        "esModuleInterop": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "incremental": true,
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    },
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+    "exclude": ["node_modules"],
+    "types": ["types"] // type 선언 추가
 }
 ```
 
 # 테스트
 
 ```jsx
-import { useState } from 'react';
-import tw, { css } from 'twin.macro';
+import { useState } from 'react'
+import tw, { css } from 'twin.macro'
 
 const Home = () => {
-  const [value, setValue] = useState(0);
+    const [value, setValue] = useState(0)
 
-  return (
-    <div>
-      <h2>max value === 3</h2>
-      <span
-        css={[
-          tw`text-[36px] block`,
-          css`
-            color: ${value === 3 && 'hotpink'};
-          `,
-        ]}
-      >
-        {value}
-      </span>
-      <button
-        type="button"
-        onClick={() => setValue((prev) => prev + 1)}
-        className="text-[36px] bolder-[1px]"
-      >
-        +
-      </button>
+    return (
+        <div>
+            <h2>max value === 3</h2>
+            <span
+                css={[
+                    tw`text-[36px] block`,
+                    css`
+                        color: ${value === 3 && 'hotpink'};
+                    `,
+                ]}
+            >
+                {value}
+            </span>
+            <button type="button" onClick={() => setValue((prev) => prev + 1)} className="text-[36px] bolder-[1px]">
+                +
+            </button>
 
-      <button
-        type="button"
-        onClick={() => setValue((prev) => prev - 1)}
-        className="text-[36px]"
-      >
-        -
-      </button>
-    </div>
-  );
-};
-export default Home;
+            <button type="button" onClick={() => setValue((prev) => prev - 1)} className="text-[36px]">
+                -
+            </button>
+        </div>
+    )
+}
+export default Home
 ```
+
 원래 위의 코드를 좀 가져와서 테스트를 하려고 했는데 쉽게 와닿지가 않는다
 그래서 아래와 같이 다시 써보겠다
 
 ```tsx
 'use client'
 
-import tw, { css } from "twin.macro";
-import React from "react"
+import tw, { css } from 'twin.macro'
+import React from 'react'
 
 interface TestProps {
-  width : number
-  height : number
-} 
+    width: number
+    height: number
+}
 const Test: React.FC<TestProps> = ({ width, height }) => {
     return (
-      <>
-        <div className={`w-[${width}px] h-[${height}px]`}>안녕하세요</div>
-      </>
+        <>
+            <div className={`w-[${width}px] h-[${height}px]`}>안녕하세요</div>
+        </>
     )
 }
 
 export default Test
 ```
+
 위의 코드가 올바르게 들어갈까?
 ![twin Example](../public/images/twin2.png)
 
@@ -254,28 +243,28 @@ tailwind는 이러한 동적할당이 적용되지 않는다
 ```tsx
 'use client'
 
-import tw, { css } from "twin.macro";
-import React from "react"
+import tw, { css } from 'twin.macro'
+import React from 'react'
 
 interface TestProps {
-  width? : number
-  height?: number
-} 
-const Test: React.FC<TestProps> = ({ width, height, }) => {
+    width?: number
+    height?: number
+}
+const Test: React.FC<TestProps> = ({ width, height }) => {
     return (
-      <>
-        <div
-          css={[
-            tw`w-full h-full`,
-            {
-              width: width,
-              height: height,
-            },
-          ]}
-        >
-          안녕하세요
-        </div>
-      </>
+        <>
+            <div
+                css={[
+                    tw`w-full h-full`,
+                    {
+                        width: width,
+                        height: height,
+                    },
+                ]}
+            >
+                안녕하세요
+            </div>
+        </>
     )
 }
 
@@ -284,38 +273,35 @@ export default Test
 
 이렇게 Props를 동적으로 할당받아 값을 가변적으로 변경할 수 있다.
 
-## 문자열 템플릿을 사용하여 동적 할당 
+## 문자열 템플릿을 사용하여 동적 할당
 
 ```tsx
 'use client'
 
-import tw, { css } from "twin.macro";
-import React from "react"
+import tw, { css } from 'twin.macro'
+import React from 'react'
 
 interface TestProps {
-  width? : number
-  height?: number
+    width?: number
+    height?: number
 }
 
 const Test: React.FC<TestProps> = ({ width, height }) => {
-  // 동적으로 할당할 스타일을 생성합니다.
-  const dynamicStyle = css`
-    width: ${width}px;
-    height: ${height}px;
-  `;
+    // 동적으로 할당할 스타일을 생성합니다.
+    const dynamicStyle = css`
+        width: ${width}px;
+        height: ${height}px;
+    `
 
-  return (
-    <>
-      <div css={dynamicStyle}>
-        안녕하세요
-      </div>
-    </>
-  )
+    return (
+        <>
+            <div css={dynamicStyle}>안녕하세요</div>
+        </>
+    )
 }
 
 export default Test
 ```
-
 
 ### 다음 참고 사이트를 참고
 

@@ -1,5 +1,7 @@
 # 요약
 
+### 참고로 Readme는 최신화 되어 있지 않음.
+
 <details>
 
 <summary>font 문서</summary>

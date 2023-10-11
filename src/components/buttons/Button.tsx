@@ -70,8 +70,8 @@ const Button: React.FC<ButtonProps> = ({
                     >
                         <h2 css={tw`[font-size: medium] text-center font-NanumGothic font-bold`}>{title}</h2>
                     </button>
-                    <span className="absolute right-[-5%] top-[-10%] -mr-1 -mt-1 flex h-15 w-15">
-                        <span className="absolute inline-flex h-full w-full animate-bounce rounded-full bg-sky-400"></span>
+                    <span tw="absolute right-[-5%] top-[-10%] -mr-1 -mt-1 flex h-15 w-15">
+                        <span tw="absolute inline-flex h-full w-full animate-bounce rounded-full bg-sky-400"></span>
                     </span>
                 </span>
             </div>

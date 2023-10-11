@@ -10,32 +10,32 @@ JavaScript로 작성된 228B의 작은 라이브러리입니다.
 `npm install --save clsx`
 
 ```javascript
-import clsx from 'clsx';
+import clsx from 'clsx'
 // or
-import { clsx } from 'clsx';
+import { clsx } from 'clsx'
 
 // Strings (variadic)
-clsx('foo', true && 'bar', 'baz');
+clsx('foo', true && 'bar', 'baz')
 //=> 'foo bar baz'
 
 // Objects
-clsx({ foo:true, bar:false, baz:isTrue() });
+clsx({ foo: true, bar: false, baz: isTrue() })
 //=> 'foo baz'
 
 // Objects (variadic)
-clsx({ foo:true }, { bar:false }, null, { '--foobar':'hello' });
+clsx({ foo: true }, { bar: false }, null, { '--foobar': 'hello' })
 //=> 'foo --foobar'
 
 // Arrays
-clsx(['foo', 0, false, 'bar']);
+clsx(['foo', 0, false, 'bar'])
 //=> 'foo bar'
 
 // Arrays (variadic)
-clsx(['foo'], ['', 0, false, 'bar'], [['baz', [['hello'], 'there']]]);
+clsx(['foo'], ['', 0, false, 'bar'], [['baz', [['hello'], 'there']]])
 //=> 'foo bar baz hello there'
 
 // Kitchen sink (with nesting)
-clsx('foo', [1 && 'bar', { baz:false, bat:null }, ['hello', ['world']]], 'cya');
+clsx('foo', [1 && 'bar', { baz: false, bat: null }, ['hello', ['world']]], 'cya')
 //=> 'foo bar hello world cya'
 ```
 
@@ -46,8 +46,9 @@ clsx('foo', [1 && 'bar', { baz:false, bat:null }, ['hello', ['world']]], 'cya');
 ## TypeScript에서는?
 
 ```javascript
-import { ClassValue, clsx } from 'clsx';
+import { ClassValue, clsx } from 'clsx'
 ```
+
 ClassValue 타입을 import해올 수 있습니다.
 이 ClassValue에 대한 정의로 가보면 굉장히 심플한 타입을 갖고 있는 것을 볼 수 있습니다.
 
@@ -65,11 +66,11 @@ import해서 사용할 수 있게 제공을 해주네요!
 대부분 유저들은 유틸함수화 시켜 사용하고 있답니다
 
 ```jsx
-import { ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { ClassValue, clsx } from 'clsx'
+import { twMerge } from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+    return twMerge(clsx(inputs))
 }
 ```
 
@@ -97,10 +98,9 @@ npm을 확인해보면 주간 다운로드수가 30만 가까이 나오고 있�
 각자 사용하고 있는 패키지매니저에 맞는 명령어를 입력해주면 됩니다.
 물론 tailwind를 사용하는 환경이어야 하겠죠?
 
-* * *
+---
 
-[😙이거 왜 사용하면 좋은 것일까요?](https://xionwcfm.tistory.com/322#%F0%9F%98%99%EC%9D%B4%EA%B1%B0%20%EC%99%9C%20%EC%82%AC%EC%9A%A9%ED%95%98%EB%A9%B4%20%EC%A2%8B%EC%9D%80%20%EA%B2%83%EC%9D%BC%EA%B9%8C%EC%9A%94%3F-1)
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## [😙이거 왜 사용하면 좋은 것일까요?](https://xionwcfm.tistory.com/322#%F0%9F%98%99%EC%9D%B4%EA%B1%B0%20%EC%99%9C%20%EC%82%AC%EC%9A%A9%ED%95%98%EB%A9%B4%20%EC%A2%8B%EC%9D%80%20%EA%B2%83%EC%9D%BC%EA%B9%8C%EC%9A%94%3F-1)
 
 tailwind-merge의 What is it for 문서를 읽어보면 다음과 같은 근거를 들어 설명합니다.
 
@@ -108,12 +108,12 @@ tailwind-merge의 What is it for 문서를 읽어보면 다음과 같은 근거�
 > 컴포넌트의 일부 스타일을 오직 한곳에서만 변경하고 싶은 상황에 익숙할 것입니다!
 
     // React components with JSX syntax used in this example
-    
+
     function MyGenericInput(props) {
         const className = `border rounded px-2 py-1 ${props.className || ''}`
         return <input {...props} className={className} />
     }
-    
+
     function MySlightlyModifiedInput(props) {
         return (
             <MyGenericInput
@@ -155,10 +155,9 @@ tailwind-merge가 제공하는 twMerge함수를 이용하면 다음과 같은 �
 
 우리가 기대한것처럼 p-3로 패딩값을 바꾸어서 렌더링합니다.
 
-* * *
+---
 
-[Features](https://xionwcfm.tistory.com/322#Features-1)
--------------------------------------------------------
+## [Features](https://xionwcfm.tistory.com/322#Features-1)
 
 기본적으로 result는 캐싱되기 때문에 불필요한 리렌더링을 걱정하지 않아도 됩니다.
 
@@ -201,10 +200,9 @@ win , 적용된다는 뜻입니다.
 
 **@apply 지시문을 사용하는 것이 추천되지 않는다는 것**입니다.
 
-* * *
+---
 
-[실제 사용법](https://xionwcfm.tistory.com/322#%EC%8B%A4%EC%A0%9C%20%EC%82%AC%EC%9A%A9%EB%B2%95-1)
----------------------------------------------------------------------------------------------
+## [실제 사용법](https://xionwcfm.tistory.com/322#%EC%8B%A4%EC%A0%9C%20%EC%82%AC%EC%9A%A9%EB%B2%95-1)
 
     import { twMerge } from 'tailwind-merge'
     const className = twMerge('p-2 p-3 p-4')
@@ -229,10 +227,9 @@ twJoin도 굉장히 유용하게 사용할 수 있겠다는 생각이 들지 않
 
 훨씬 읽기 쉽게 코드가 변한것을 알 수 있습니다.
 
-* * *
+---
 
-[😐마치며](https://xionwcfm.tistory.com/322#%F0%9F%98%90%EB%A7%88%EC%B9%98%EB%A9%B0-1)
------------------------------------------------------------------------------------
+## [😐마치며](https://xionwcfm.tistory.com/322#%F0%9F%98%90%EB%A7%88%EC%B9%98%EB%A9%B0-1)
 
 tailwindcss를 사용하면서 편하다는 생각이 있었지만
 
@@ -245,5 +242,3 @@ tailwindcss를 사용하면서 편하다는 생각이 있었지만
 1.  [참고사이트](https://xionwcfm.tistory.com/322)
 2.  [참고사이트](https://xionwcfm.tistory.com/323)
 3.  [참고사이트](https://xionwcfm.tistory.com/325)
-
-
