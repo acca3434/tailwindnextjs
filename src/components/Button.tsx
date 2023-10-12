@@ -4,16 +4,16 @@ import tw from 'twin.macro'
 
 const ButtonVariant = {
     primary: [
-        tw`bg-gray-500 text-black`,
-        tw`border-gray-600 border`,
-        tw`hover:bg-gray-600 hover:text-sky-400`,
-        tw`active:bg-black`,
+        tw`bg-gray-50 text-black`,
+        tw`border border-gray-50`,
+        tw`hover:bg-gray-200 hover:text-sky-300`,
+        tw`active:bg-gray-300`,
         tw`disabled:bg-black`,
     ],
     outline: [
         tw`text-gray-500`,
         tw`border-gray-500 border`,
-        tw`hover:bg-gray-50 active:bg-gray-100 disabled:bg-gray-100`,
+        tw`hover:bg-gray-200 active:bg-gray-100 disabled:bg-gray-100`,
     ],
     ghost: [
         tw`text-black`,
@@ -73,9 +73,9 @@ const Button: React.FC<ButtonProps> = ({ variant = 'primary', size = 'base', isD
                     >
                         <h2 css={tw`[font-size: medium] text-center font-NanumGothic font-bold`}>{title}</h2>
                     </button>
-                    <span tw="absolute right-[-5%] top-[-10%] -mr-1 -mt-1 flex h-15 w-15">
+                    {/* <span tw="absolute right-[-5%] top-[-10%] -mr-1 -mt-1 flex h-15 w-15">
                         <span tw="absolute inline-flex h-full w-full animate-bounce rounded-full bg-sky-400"></span>
-                    </span>
+                    </span> */}
                 </span>
             </div>
         </div>

@@ -1,6 +1,6 @@
 'use client'
-import Button from '@/components/Buttons/Button'
-import TextInput from '@/components/Input/TextInput'
+import Button from '@/components/Button'
+import TextInput from '@/components/TextInput'
 import Divider from '@/components/Divider'
 import tw from 'twin.macro'
 import RadioGroup from '@/components/Radio'
@@ -19,7 +19,7 @@ const Login: React.FC<LoginLayoutProps> = () => {
                         <CheckBox />
                     </div>
                     <div css={tw`flex flex-row`}>
-                        <div className="flex items-center justify-center">
+                        <div css={tw`flex items-center justify-center`}>
                             <RadioGroup value={'admin'} label={'운영자'} />
                             <RadioGroup value={'teacher'} label={'교강사'} />
                         </div>
