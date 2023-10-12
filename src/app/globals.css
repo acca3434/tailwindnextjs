@@ -1,8 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-body {
+g body {
     background-color: #f2f5f9;
 }
 

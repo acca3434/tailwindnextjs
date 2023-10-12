@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import tw from 'twin.macro'
 
 const Label: React.FC<LabelProps> = ({ labelContent, checked, onChange }) => {
@@ -30,38 +30,3 @@ const Label: React.FC<LabelProps> = ({ labelContent, checked, onChange }) => {
 }
 
 export default Label
-
-// 'use client'
-// import React, { useState, useEffect } from 'react'
-// import tw from 'twin.macro'
-
-// const Label: React.FC<LabelProps> = ({ labelContent, type, userType, defaultChecked }) => {
-//     const [isChecked, setIsChecked] = useState(defaultChecked)
-
-//     useEffect(() => {
-//         setIsChecked(defaultChecked)
-//     }, [defaultChecked])
-
-//     const handleInputChange = () => {
-//         setIsChecked(!isChecked)
-//     }
-
-//     return (
-//         <>
-//             <div css={tw`ml-15 flex items-center space-x-4`}>
-//                 <input
-//                     type={type}
-//                     css={tw`focus:ring-indigo-500 h-20 w-20 text-indigo-600 transition-transform duration-1000`}
-//                     className={isChecked ? 'transform scale-110' : 'transform scale-100'}
-//                     name={userType}
-//                     defaultChecked={defaultChecked}
-//                 />
-//                 <label htmlFor={labelContent} css={tw`text-sm text-gray-700`}>
-//                     {labelContent}
-//                 </label>
-//             </div>
-//         </>
-//     )
-// }
-
-// export default Label
