@@ -24,7 +24,15 @@
             "@/*": ["./src/*"]
         }
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "types", "tailwind.config.js"],
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        ".next/types/**/*.ts",
+        "types",
+        "tailwind.config.js",
+        "twin.d.ts"
+    ],
     "exclude": ["node_modules", "__tests__"],
     "types": ["types"]
 }
