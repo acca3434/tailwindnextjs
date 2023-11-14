@@ -1,7 +1,6 @@
 'use client'
 import { useCallback, useRef, useEffect, MouseEventHandler } from 'react'
 import { useRouter } from 'next/navigation'
-import tw from 'twin.macro'
 export default function Modal({ children }: { children: React.ReactNode }) {
     const overlay = useRef(null)
     const wrapper = useRef(null)
@@ -33,10 +32,10 @@ export default function Modal({ children }: { children: React.ReactNode }) {
     }, [onKeyDown])
 
     return (
-        <div ref={overlay} css={tw`fixed z-10 left-0 right-0 top-0 bottom-0 mx-auto bg-black/60`} onClick={onClick}>
+        <div ref={overlay} className={`fixed z-10 left-0 right-0 top-0 bottom-0 mx-auto bg-black/60`} onClick={onClick}>
             <div
                 ref={wrapper}
-                css={tw`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full small-pc:w-10/12 mobile:w-8/12 light:w-1/2 p-6`}
+                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full small-pc:w-10/12 mobile:w-8/12 light:w-1/2 p-6`}
             >
                 {children}
             </div>

@@ -1,0 +1,38 @@
+(main)
+├── (1.dashboard)
+│  └── dashboards
+│     └── crypto
+│        ├── currentCourse.exam.ts
+│        ├── currentCouse
+│          └── index.tsx
+│        ├── notice
+│          └── index.tsx
+│        ├── page.tsx
+│        └── schedules
+│           └── index.tsx
+├── (2.orgInfoManage)
+│  ├── courseInfo
+│     └── list
+│        ├── data.ts
+│        ├── page.tsx
+│        └── table.tsx
+│  └── coursemanagement
+│     └── list
+│        ├── page.tsx
+│        └── table.tsx
+├── (3.staff)
+│  ├── candidatemanagement
+│       └── list
+│            ├── page.tsx
+│            └── table.tsx
+│  ├── staff
+│       └── list
+│            ├── page.tsx
+│            └── table.tsx
+│  └── students
+│     └── info
+│        └── [[...course_id]]
+│           ├── StudentsListPage.tsx
+│           ├── page.tsx
+│           └── table.tsx
+  
